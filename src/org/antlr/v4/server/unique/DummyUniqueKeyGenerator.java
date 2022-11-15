@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class DummyUniqueKeyGenerator implements UniqueKeyGenerator {
     @Override
-    public Optional<String> generateKey() {
+    public Optional<String> generateKey(byte[] buffer) {
         return Optional.of(UUID.randomUUID().toString());
     }
 }

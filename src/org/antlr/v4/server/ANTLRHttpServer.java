@@ -2,8 +2,8 @@ package org.antlr.v4.server;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.antlr.v4.server.persistent.PersistentLayer;
-import org.antlr.v4.server.persistent.cloudstorage.CloudStoragePersistentLayer;
+import org.antlr.v4.server.persistent.PersistenceLayer;
+import org.antlr.v4.server.persistent.cloudstorage.CloudStoragePersistenceLayer;
 import org.antlr.v4.server.unique.DummyUniqueKeyGenerator;
 import org.antlr.v4.server.unique.UniqueKeyGenerator;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -127,9 +127,9 @@ public class ANTLRHttpServer {
 				JsonObject jsonObj = jsonReader.readObject();
 
 
-				PersistentLayer<String> persistentLayer = new CloudStoragePersistentLayer();
+				PersistenceLayer<String> persistentLayer = new CloudStoragePersistenceLayer();
 				UniqueKeyGenerator keyGen = new DummyUniqueKeyGenerator();
-				Optional<String> uniqueKey = keyGen.generateKey();
+				Optional<String> uniqueKey = keyGen.generateKey(null);
 				persistentLayer.persist(jsonObj.toString().getBytes(StandardCharsets.UTF_8),
 						uniqueKey.orElseThrow());
 
