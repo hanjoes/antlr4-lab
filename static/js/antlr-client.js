@@ -625,6 +625,21 @@ function setUpDragAndDrop() {
     }
 }
 
+function functABC() {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: "retrieve/12345",
+            dataType: 'jsonp',
+            success: function(data) {
+                resolve(data);
+            },
+            error: function(err) {
+                reject(err);
+            }
+        });
+    });
+}
+
 // MAIN
 $(document).ready(function() {
     String.prototype.sliceReplace = function (start, end, repl) {
@@ -662,4 +677,19 @@ $(document).ready(function() {
 
     setUpDragAndDrop();
     setupSelectGrammarTable();
+
+
+    console.log(-1)
+
+    functABC().then(function(data) {
+        // Run this when your request was successful
+        console.log(data);
+    }).catch(function(err) {
+        // Run this when promise was rejected via reject()
+        console.log(err)
+        var parserSession = ace.createEditSession(SAMPLE_PARSER);
+        $("#grammar").data("parserSession", parserSession);
+        editor.setSession(parserSession);
+    })
+    console.log(0)
 });
